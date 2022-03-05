@@ -1,8 +1,7 @@
 extends base.pug
 include mixins/video
 
-block content 
-    h1 Watch Video!
+block content
     each potato in videos
         +video(potato)
     else 
