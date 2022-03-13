@@ -1,0 +1,14 @@
+extends ../base.pug
+
+block content
+    h1 Random Number Generator
+
+    form(method="POST")
+        label(for="from") from
+        input(name="from", type="number")
+        label(for="to") to
+        input(name="to", type="number")
+        input(type="submit", value="generate")
+
+    div
+        span#output sadf
