@@ -1,14 +1,22 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  createdAt: Date,
+  title: { type: String, required: true, trim: true },
+  fileUrl: { type: String, required: true },
+  description: { type: String, required: true },
+  createdAt: { type: Date, required: true, default: Date.now },
   hashtags: [{ type: String }],
   mata: {
-    views: Number,
-    rating: Number,
+    views: { type: Number, default: 0, required: true },
+    rating: { type: Number, default: 0, required: true },
   },
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+});
+
+videoSchema.static("formatHashtags", function (hashtags) {
+  return hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
 
 const Babo = mongoose.model("Video", videoSchema);
