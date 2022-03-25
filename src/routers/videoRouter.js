@@ -6,6 +6,7 @@ import {
   getUpload,
   postUpload,
   deleteVideo,
+  tlqkfdk,
 } from "../controllers/videoController";
 import { protectorMiddleware, videoUpload } from "../middleware";
 

@@ -3,9 +3,9 @@ import morgan from "morgan"; // import <이름> 이름은 상관 없음
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
-import testRouter from "./routers/testRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import apiRouter from "./routers/apiRouter";
 import { localsMiddleware } from "./middleware";
 
 const app = express();
@@ -41,6 +41,6 @@ app.use("/static", express.static("assets")); // static url로 가면, asset 폴
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
-app.use("/test", testRouter);
+app.use("/api", apiRouter);
 
 export default app;

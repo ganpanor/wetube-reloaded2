@@ -26,6 +26,12 @@ const handlePlayClick = (e) => {
   playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
+const handleSpaceBar = (event) => {
+  if (event.keyCode === 32) {
+    handlePlayClick();
+  }
+};
+
 const handleMute = (e) => {
   if (video.muted) {
     video.muted = false;
@@ -89,11 +95,7 @@ const handleFullscreen = () => {
 // };
 // videoContainer.addEventListener("fullscreenchange", handleFullScreenBtn);
 
-const hideControls = () => {
-  videoControls.classList.remove("showing");
-
-  console.log("bye");
-};
+const hideControls = () => videoControls.classList.remove("showing");
 
 const handleMouseMove = () => {
   if (controlsTimeout) {
@@ -113,27 +115,22 @@ const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000);
 };
 
-// const handleControlsHover = () => {
-//   if (controlsTimeout) {
-//     clearTimeout(controlsTimeout);
-//     controlsTimeout = null;
-//   }
-//   if (controlsMovementTimeout) {
-//     clearTimeout(controlsMovementTimeout);
-//     controlsMovementTimeout = null;
-//   }
-//   videoControls.classList.add("showing");
-// };
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
 
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
+document.addEventListener("keydown", handleSpaceBar);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("click", handlePlayClick);
 video.addEventListener("loadeddata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
-// videoControls.addEventListener("mouseenter", handleControlsHover);
-// videoControls.addEventListener("mouseleave", handleMouseLeave);
