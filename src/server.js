@@ -37,7 +37,7 @@ app.use(
 
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("assets"));
+app.use("/static", express.static("assets")); // static url로 가면, asset 폴더에 접근할 수 있는 권한을 줌
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
