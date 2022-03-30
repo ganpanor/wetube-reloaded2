@@ -25,7 +25,9 @@ input:not(input[type="range"]) {
 }
 
 input[type="submit"],
-.social__btn {
+.social__btn,
+#upload__btn,
+#actionBtn {
   border-radius: 5px;
   padding: 12px 20px;
   background-color: white;
