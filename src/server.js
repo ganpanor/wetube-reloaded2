@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan"; // import <이름> 이름은 상관 없음
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
@@ -20,26 +21,16 @@ app.use((req, res, next) => {
 });
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    // cookie: {
-    //   maxAge: 20000,
-    // },
     store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
-
-// app.use((req, res, next) => {
-//   req.sessionStore.all((error, sessions) => {
-//     console.log(sessions);
-//     next();
-//   });
-// });
-
+app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets")); // static url로 가면, asset 폴더에 접근할 수 있는 권한을 줌
